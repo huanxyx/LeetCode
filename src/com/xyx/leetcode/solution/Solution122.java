@@ -15,4 +15,20 @@ public class Solution122 {
         }
         return maxProfit;
     }
+    
+    //山谷山峰，求差值
+    private int solution(int[] prices) {
+    	int maxProfit = 0;
+    	int cur = 0;
+    	while (cur < prices.length) {
+    		int valley = prices[cur];		//山谷值
+    		//找到山谷对应的右侧山峰
+    		while (cur < prices.length-1 && prices[cur] <= prices[cur+1])
+    			cur++;
+    		int peek = prices[cur];			//山峰值
+    		maxProfit += peek - valley;
+    		cur++;
+    	}
+    	return maxProfit;
+    }
 }

@@ -9,8 +9,9 @@ public class Solution121 {
     	int minPrice = Integer.MAX_VALUE;
     	int maxProfit = 0;
     	for (int i = 0; i < prices.length; i++) {
-    		maxProfit = Math.max(maxProfit, prices[i] - minPrice);
+    		//调整了求解minPrice和maxProfit的顺序，其实无关紧要，只是为了更好的理解
     		minPrice = Math.min(minPrice, prices[i]);
+    		maxProfit = Math.max(maxProfit, prices[i] - minPrice);
     	}
     	return maxProfit;
     } 
