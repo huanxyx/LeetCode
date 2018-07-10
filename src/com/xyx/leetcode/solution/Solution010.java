@@ -43,4 +43,39 @@ public class Solution010 {
     	
     	return false;
     }
+    
+    /*
+     * 动态规划实现
+     */
+    public boolean isMatch_2(String s, String p) {
+    	if (s == null || p == null)
+    		return false;
+    	
+    	//状态
+    	boolean[][] dp = new boolean[s.length() + 1][p.length() + 1];
+    	//初始状态
+    	//边界赋值
+    	dp[0][0] = true;
+    	//
+    	for (int i = 1; i < p.length(); i++) {
+    		if (p.charAt(i) == '*')
+    			dp[0][i+1] = dp[0][i-1]; 
+    	}
+    	//状态转移，由于每一层的某个状态能够通过上一层和这一层的状态得到，所以可以将空间复杂度降低为2*N，其中N表示正则匹配字符串的长度
+    	for (int sCur = 0; sCur < s.length(); sCur++) {								//控制字符串的长度
+    		for (int pCur = 0; pCur < p.length(); pCur++) {							//控制匹配字符串的长度
+    			if (p.charAt(pCur) == '*') {
+    				if (s.charAt(sCur) == p.charAt(pCur - 1) || p.charAt(pCur - 1) == '.')
+    					dp[sCur + 1][pCur + 1] = dp[sCur][pCur - 1] || 				//一个*号换一个
+    										dp[sCur][pCur + 1] ||					//一个*号换多个
+    											dp[sCur + 1][pCur - 1];				//一个*号不换
+    				else
+    					dp[sCur + 1][pCur + 1] = dp[sCur + 1][pCur - 1];
+    			} else if (p.charAt(pCur) == '.' || p.charAt(pCur) == s.charAt(sCur))
+    				dp[sCur + 1][pCur + 1] = dp[sCur][pCur];
+    		}
+    	}
+    	
+    	return dp[s.length()][p.length()];
+    }
 }
