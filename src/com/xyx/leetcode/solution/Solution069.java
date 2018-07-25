@@ -9,14 +9,14 @@ public class Solution069 {
         
         while (low <= hig) {
         	int mid = low + (hig - low) / 2;
-        	long square = (long)mid * mid;		//使用long是为了避免平方溢出
+        	int div = x / mid;
         	
-        	if (square == x) 
+        	if (div == mid) 
         		return mid;
-        	else if (square < x)
-        		low = mid + 1;
-        	else
+        	else if (div < mid)
         		hig = mid - 1;
+        	else
+        		low = mid + 1;
         }
         return hig;
     }
